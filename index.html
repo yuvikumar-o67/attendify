@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ATTENDIFY</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
+    />
+
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg custom-navbar">
+      <div class="container-fluid">
+        <div class="d-flex flex-column align-items-start">
+          <h1 class="logo m-0">ATTENDify</h1>
+          <span class="logo-sub">by yvjkmr</span>
+        </div>
+        <label class="switch ms-3">
+          <input type="checkbox" id="modeToggle" />
+          <span class="slider round"></span>
+        </label>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div
+          class="collapse navbar-collapse justify-content-end"
+          id="navbarNav"
+        >
+          <ul class="navbar-nav text-end">
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                href="#"
+                data-bs-toggle="modal"
+                data-bs-target="#homeModal"
+                >Home</a
+              >
+            </li>
+
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                href="#"
+                data-bs-toggle="modal"
+                data-bs-target="#aboutModal"
+                >About</a
+              >
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="#contact">Contact</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Add this inside your body, after your navbar -->
+
+    <!-- About Modal -->
+    <div
+      class="modal fade"
+      id="aboutModal"
+      tabindex="-1"
+      aria-labelledby="aboutModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div
+          class="modal-content custom-modal-content"
+          style="width: 50vw; height: 70vh"
+        >
+          <div class="modal-header">
+            <h5 class="modal-title" id="aboutModalLabel">About Me</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+
+          <div class="modal-body">
+            Hello! I'm Yuvraj Kumar, a web developer passionate about building
+            responsive and interactive websites.
+            <p>
+              I’m pursuing B.Tech in Electrical Engineering from
+              <a
+                href="https://aec.ac.in"
+                target="_blank"
+                rel="noopener noreferrer"
+                style="color: black; text-decoration: none"
+                >Assam Engineering College</a
+              >. I made this project to test my development skills. This app
+              will benefit me and others to manage their attendance.
+              <br /><br />
+              <strong>Happy Coding!</strong>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Optional Trigger Button -->
+    <div class="text-center mt-4">
+      <button class="btn btn-primary" onclick="openPopup()">
+        Update Student Details
+      </button>
+    </div>
+
+    <!-- Popup Form -->
+    <div id="popupOverlay" class="popup-overlay">
+      <div class="popup-form">
+        <h2>Student Details</h2>
+
+        <label for="nameInput">Name</label>
+        <input
+          type="text"
+          id="nameInput"
+          placeholder="Type your name"
+          required
+        />
+
+        <label for="semSelect">Semester</label>
+        <select id="semSelect" required>
+          <option value="">Select</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+          <option value="7">7</option>
+          <option value="8">8</option>
+          <option value="9">9</option>
+          <option value="10">10</option>
+        </select>
+
+        <label for="courseInput">Course Type</label>
+        <input
+          type="text"
+          id="courseInput"
+          placeholder="e.g. B.Tech, M.Tech"
+          required
+        />
+
+        <label for="branchInput">Branch Type</label>
+        <input
+          type="text"
+          id="branchInput"
+          placeholder="e.g. CSE, EEE"
+          required
+        />
+
+        <div class="popup-buttons">
+          <button onclick="submitPopup()">Submit</button>
+          <!-- <button onclick="closePopup()">Close</button> -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Output Display -->
+    <div id="displayArea"></div>
+
+    <!-- attendance-manager -->
+    <div class="container my-4" id="attendance-manager">
+      <div class="d-flex flex-column align-items-center mb-4">
+        <h4 class="mb-3 text-center">Add Subject</h4>
+        <div class="input-group" style="max-width: 400px">
+          <input
+            type="text"
+            class="form-control"
+            id="subjectInput"
+            placeholder="Enter Subject"
+          />
+          <button class="btn btn-success" id="addSubjectBtn">+</button>
+          <button
+            class="btn btn-outline-secondary"
+            id="refreshBtn"
+            title="Refresh"
+          >
+            &#x21bb;
+          </button>
+        </div>
+      </div>
+
+      <div class="mb-4 text-center">
+        <h5>Total Attendance:</h5>
+        <p id="overallStatus" class="mb-0 fw-semibold">
+          0/0 (0%) — <span class="badge bg-secondary">No Data</span>
+        </p>
+      </div>
+
+      <div id="subjectList"></div>
+    </div>
+
+    <footer id="contact" class="py-4 text-center text-dark">
+      <div class="container">
+        <div class="row gy-3">
+          <div class="col-12 col-md-4">
+            <h6>Contact</h6>
+            <p class="mb-1">📞 +91 98765 43210</p>
+            <p>✉️ yuvraj.kumar@email.com</p>
+          </div>
+
+          <div class="col-12 col-md-4">
+            <h6>Follow Us</h6>
+            <a href="#" class="text-dark me-3"
+              ><i class="bi bi-facebook"></i
+            ></a>
+            <a href="#" class="text-dark me-3"
+              ><i class="bi bi-instagram"></i
+            ></a>
+            <a href="#" class="text-dark me-3"><i class="bi bi-twitter"></i></a>
+            <a href="#" class="text-dark"><i class="bi bi-linkedin"></i></a>
+          </div>
+
+          <div class="col-12 col-md-4">
+            <h6>© 2025</h6>
+            <p class="mb-0">Website made by <strong>Yuvraj Kumar</strong></p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <div
+      class="modal fade"
+      id="homeModal"
+      tabindex="-1"
+      aria-labelledby="homeModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content" style="background-color: red; color: aliceblue;">
+          <div class="modal-header">
+            <h5 class="modal-title" id="homeModalLabel">Heads Up!</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body " >
+            No home until you Fix your attendance. This button does nothing — just
+            like the whole app!
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
